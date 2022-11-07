@@ -156,6 +156,8 @@ int tree_dump(tree_t* tree, int print_mode)
     printf("-----------------------------------------------------------\n");
     printf("\n");
 
+    printf("size = %d\n", tree->size);
+    printf("-----------------------------------------------------------\n");
     print_nodes(tree->root, print_mode);
 
     return TREE_SUCCESS;
