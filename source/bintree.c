@@ -108,3 +108,49 @@ int tree_verify(tree_t* tree)
 }
 
 //=========================================================================
+
+int tree_dump(tree_t* tree)
+{
+    CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
+    int verify = tree_verify(tree);
+    CHECK(verify == TREE_SUCCESS, verify);
+
+    return TREE_SUCCESS;
+}
+
+//=========================================================================
+
+static void print_nodes(node_t* node, int print_mode)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+
+    if(print_mode == INORDER)
+    {
+        if(node->left != NULL)
+        {
+            print_nodes(node->left);
+        }
+        printf("%d ", node->data);
+        if(node->right != NULL)
+        {
+            print_nodes(node->right);
+        }  
+    }
+    else if(print_mode == PREORDER)
+    {
+
+    }
+    else if(print_mode == POSTORDER)
+    {
+
+    }
+    else
+    {
+        
+    }
+}
+
+//=========================================================================

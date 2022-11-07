@@ -47,6 +47,13 @@ enum node_codes
     RIGHT = 1
 };
 
+enum print_mode
+{
+    PREORDER  = 1,
+    POSTORDER = 2,
+    INORDER   = 3
+};
+
 //=========================================================================
 
 int tree_ctor(tree_t* tree);
@@ -55,3 +62,5 @@ int tree_dtor(tree_t* tree);
 static void tree_node_dtor(node_t* node);
 int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value);
 int tree_verify(tree_t* tree);
+static void print_nodes(node_t* node, int print_mode);
+int tree_dump(tree_t* tree);
