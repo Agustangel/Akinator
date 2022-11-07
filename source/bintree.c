@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <logger.h>
 
 #include "bintree.h"
 #include "debug.h"
@@ -85,6 +86,7 @@ int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value)
     }
     else
     {
+        LOG("LINE: %d. ERROR: incorrect position of node\n", __LINE__);
         return ERR_TREE_BAD_POSITION;
     }
 
@@ -127,29 +129,45 @@ static void print_nodes(node_t* node, int print_mode)
         return;
     }
 
-    if(print_mode == INORDER)
+    if(print_mode == PREORDER)
+    {
+        printf("%d ", node->data);
+        if(node->left != NULL)
+        {
+            print_nodes(node->left, PREORDER);
+        }
+        if(node->right != NULL)
+        {
+            print_nodes(node->right, PREORDER);
+        }  
+    }
+    else if(print_mode == INORDER)
     {
         if(node->left != NULL)
         {
-            print_nodes(node->left);
+            print_nodes(node->left, INORDER);
         }
         printf("%d ", node->data);
         if(node->right != NULL)
         {
-            print_nodes(node->right);
-        }  
-    }
-    else if(print_mode == PREORDER)
-    {
-
+            print_nodes(node->right, INORDER);
+        }         
     }
     else if(print_mode == POSTORDER)
     {
-
+        if(node->left != NULL)
+        {
+            print_nodes(node->left, POSTORDER);
+        }
+        if(node->right != NULL)
+        {
+            print_nodes(node->right, POSTORDER);
+        }
+        printf("%d ", node->data);
     }
     else
     {
-        
+        LOG("LINE: %d. ERROR: incorrect print mode\n", __LINE__);
     }
 }
 
