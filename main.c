@@ -6,7 +6,7 @@
 
 int main()
 {
-    node_t tree;
+    tree_t tree;
     tree_ctor(&tree);
     tree_dtor(&tree);
 

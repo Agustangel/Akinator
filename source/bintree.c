@@ -31,3 +31,30 @@ static node_t* tree_node_ctor(const elem_t value)
 }
 
 //=========================================================================
+
+int tree_dtor(tree_t* tree)
+{
+    CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
+    
+    tree_node_dtor(tree->root);
+    tree->root = NULL;
+    tree->size = SIZE_MAX;
+
+    return TREE_SUCCESS;
+}
+
+//=========================================================================
+
+static void tree_node_dtor(node_t* node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+
+    tree_node_dtor(node->right);
+    tree_node_dtor(node->left);
+    free(node);
+}
+
+//=========================================================================

@@ -1,5 +1,9 @@
 #pragma once
 
+#include<stdio.h>
+
+
+#define DATA_POISON = 0;
 
 //=========================================================================
 
@@ -34,4 +38,7 @@ enum tree_codes
 
 //=========================================================================
 
-int tree_ctor(node_t* tree);
+int tree_ctor(tree_t* tree);
+static node_t* tree_node_ctor(const elem_t value);
+int tree_dtor(tree_t* tree);
+static void tree_node_dtor(node_t* node);
