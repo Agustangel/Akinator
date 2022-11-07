@@ -40,3 +40,40 @@ static int ret_;
 #else
     #define ASSERT(condition, message, retval){}
 #endif
+
+
+//! Macros TREE_ERROR
+/*! macros to print the error. */
+#define TREE_ERROR(ERROR_NAME)                                                      \
+{                                                                                   \
+    fprintf(stderr, RED "ERROR:" RESET "line %d. " #ERROR_NAME "\n", __LINE__);     \
+};
+
+//! Macros TREE_OK
+/*! macros to describe the error. */
+#define TREE_OK(tree)                                                               \
+                                                                                    \
+    ret_ = tree_veryfi(tree);                                                       \
+                                                                                    \
+    switch (ret_)                                                                   \
+    {                                                                               \
+    case (1 << ERR_TREE_NULL_PTR):                                                  \
+        TREE_ERROR(ERR_TREE_NULL_PTR);                                              \
+        break;                                                                      \
+                                                                                    \
+    case (1 << ERR_TREE_OUT_MEMORY):                                                \
+        TREE_ERROR(ERR_TREE_OUT_MEMORY);                                            \
+        break;                                                                      \
+                                                                                    \
+    case (1 << ERR_TREE_BAD_POSITION):                                              \
+        TREE_ERROR(ERR_TREE_BAD_POSITION);                                          \
+        break;                                                                      \
+                                                                                    \
+    case (1 << ERR_TREE_BAD_PTR):                                                   \
+        TREE_ERROR(ERR_TREE_BAD_PTR);                                               \
+        break;                                                                      \
+                                                                                    \
+    case (1 << ERR_TREE_BAD_SIZE):                                                  \
+        TREE_ERROR(ERR_TREE_BAD_SIZE);                                              \
+        break;                                                                      \
+    };

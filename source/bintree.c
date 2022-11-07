@@ -111,11 +111,52 @@ int tree_verify(tree_t* tree)
 
 //=========================================================================
 
-int tree_dump(tree_t* tree)
+int tree_dump(tree_t* tree, int print_mode)
 {
     CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
     int verify = tree_verify(tree);
     CHECK(verify == TREE_SUCCESS, verify);
+
+    if(tree->status != 0)
+    {
+        int error_tmp = 0;
+        for(int error_idx = 1; error_idx < ERROR_NUMBER + 1; ++error_idx)
+        {
+            error_tmp = tree->status;
+            error_tmp &= 1 << error_idx;
+    
+            switch (error_tmp)
+            {
+            case (1 << ERR_TREE_NULL_PTR):
+                TREE_ERROR(ERR_TREE_NULL_PTR);
+                break;
+
+            case (1 << ERR_TREE_BAD_PTR):
+                TREE_ERROR(ERR_TREE_BAD_PTR);
+                break;
+
+            case (1 << ERR_TREE_OUT_MEMORY):
+                TREE_ERROR(ERR_TREE_OUT_MEMORY);
+                break;
+
+            case (1 << ERR_TREE_BAD_SIZE):
+                TREE_ERROR(ERR_TREE_BAD_SIZE);
+                break;
+
+            case (1 << ERR_TREE_BAD_POSITION):
+                TREE_ERROR(ERR_TREE_BAD_POSITION);
+                break;
+
+            default:
+                break;
+            };
+        }
+    }
+    printf("\n");
+    printf("-----------------------------------------------------------\n");
+    printf("\n");
+
+    print_nodes(tree->root, print_mode);
 
     return TREE_SUCCESS;
 }

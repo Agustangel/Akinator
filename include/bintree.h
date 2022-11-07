@@ -4,7 +4,8 @@
 #include <stdint.h>
 
 
-#define DATA_POISON = 0;
+#define DATA_POISON 0
+#define ERROR_NUMBER 5
 
 //=========================================================================
 
