@@ -63,6 +63,22 @@ static void tree_node_dtor(node_t* node)
 
 //=========================================================================
 
+int inser_root(tree_t* tree, node_t* node, const elem_t value)
+{
+    CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
+    CHECK(node !=  NULL, ERR_TREE_NULL_PTR);
+
+    node_t *newnode = tree_node_ctor(value);
+    CHECK(newnode != NULL, ERR_TREE_OUT_MEMORY);
+
+    tree->root = newnode;
+    tree->size++;
+
+    return TREE_SUCCESS;
+}
+
+//=========================================================================
+
 int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value)
 {
     CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
@@ -91,6 +107,25 @@ int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value)
     }
 
     return TREE_SUCCESS;
+}
+
+//=========================================================================
+
+static void delete_node(node_t* node)
+{
+    CHECK(node !=  NULL, ERR_TREE_NULL_PTR);
+
+    if(node->left != NULL)
+    {
+        delete_node(node->left);
+    }  
+    if(node->right != NULL)
+    {
+        delete_node(node->right);
+    }
+
+    free(node);
+    node = NULL;
 }
 
 //=========================================================================
