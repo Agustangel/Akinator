@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "bintree.h"
 #include "debug.h"
@@ -35,6 +36,8 @@ static node_t* tree_node_ctor(const elem_t value)
 int tree_dtor(tree_t* tree)
 {
     CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
+    int verify = tree_verify(tree);
+    CHECK(verify == TREE_SUCCESS, verify);
 
     tree_node_dtor(tree->root);
     tree->root = NULL;
@@ -59,10 +62,13 @@ static void tree_node_dtor(node_t* node)
 
 //=========================================================================
 
-int insert_node(tree_t* tree, node_t* node, enum node_codes, const elem_t value)
+int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value)
 {
     CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
     CHECK(node !=  NULL, ERR_TREE_NULL_PTR);
+
+    int verify = tree_verify(tree);
+    CHECK(verify == TREE_SUCCESS, verify);
 
     node_t *newnode = tree_node_ctor(value);
     CHECK(newnode != NULL, ERR_TREE_OUT_MEMORY);
@@ -81,6 +87,22 @@ int insert_node(tree_t* tree, node_t* node, enum node_codes, const elem_t value)
     {
         return ERR_TREE_BAD_POSITION;
     }
+
+    return TREE_SUCCESS;
+}
+
+//=========================================================================
+
+int tree_verify(tree_t* tree)
+{
+    CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
+    bool value = 0;
+
+    value = (tree->root == NULL);
+    tree->status |= value << ERR_TREE_NULL_PTR;
+
+    value = (tree->size <= 0);
+    tree->status |= value << ERR_TREE_BAD_SIZE;
 
     return TREE_SUCCESS;
 }
