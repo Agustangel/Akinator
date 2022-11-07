@@ -1,6 +1,8 @@
 #pragma once
 
 
+//=========================================================================
+
 typedef int elem_t;
 
 typedef struct node_t
@@ -11,6 +13,15 @@ typedef struct node_t
 
 } node_t;
 
+typedef struct tree_t
+{
+    node_t* root;
+    size_t size;
+
+} tree_t;
+
+//=========================================================================
+
 enum tree_codes
 {
     TREE_SUCCESS              = 0,
@@ -20,3 +31,7 @@ enum tree_codes
     ERR_TREE_BAD_SIZE         = 4,
     ERR_TREE_INC_TREE         = 8
 };
+
+//=========================================================================
+
+int tree_ctor(node_t* tree);
