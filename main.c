@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <logger.h>
+#include <onegin.h>
 
 #include "bintree.h"
 #include "debug.h"
