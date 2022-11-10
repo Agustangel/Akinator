@@ -9,7 +9,7 @@
 
 //=========================================================================
 
-typedef int elem_t;
+typedef char* elem_t;
 typedef uint_fast16_t treeStatus_t;
 
 typedef struct node_t node_t;
@@ -38,7 +38,8 @@ enum tree_codes
     ERR_TREE_NULL_PTR         = 1,
     ERR_TREE_OUT_MEMORY       = 2,
     ERR_TREE_BAD_SIZE         = 3,
-    ERR_TREE_BAD_POSITION     = 4
+    ERR_TREE_BAD_POSITION     = 4,
+    ERR_TREE_BAD_STRING       = 5
 };
 
 enum node_codes

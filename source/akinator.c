@@ -10,11 +10,6 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 {
     CHECK(tree != NULL, ERR_TREE_NULL_PTR);
 
-    node_t* current_node = tree->root;
-    for(int idx = 0; idx < number_strings; ++idx)
-    {
-        parse_data(strings_tree[idx], current_node); // ? node
-    }
 
     int mode = get_mode();
     CHECK(mode != MODE_ERROR, ERR_AKTR_BAD_MODE);
@@ -72,23 +67,51 @@ int get_mode()
 
 //=========================================================================
 
-int parse_data(struct string_t string_tree, node_t* node)
+int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
 {
-    char* current_position = string_tree->begin_string;
-    CHECK(current_position != NULL, ERR_TREE_NULL_PTR);
+    CHECK(tree != NULL, ERR_TREE_NULL_PTR);
+    CHECK(strings_tree != NULL, ERR_TREE_NULL_PTR);
 
-    if(*current_position == '{')
-    {
-        ++current_position;
-        if(*current_position == 'l')
+    node_t* current_node = tree->root;
+    for(int idx = 0; idx < number_strings; ++idx)
+    { 
+        char* current_position = strings_tree[idx].begin_string;
+        CHECK(current_position != NULL, ERR_TREE_NULL_PTR);
+
+        if(tree->root == NULL)
         {
-            node = node->left;
-            // CHECK node
+            inser_root(tree, tree->root, strings_tree[idx].begin_string);
         }
-        else if(*current_position == 'r')
+        if(*current_position == '{')
         {
-            node = node->right;
-            // CHECK node            
+            ++current_position;
+            if(*current_position == 'l')
+            {
+                insert_node(tree, current_node, LEFT, strings_tree[idx + 1].begin_string);
+                current_node = current_node->left;
+            }
+            else if(*current_position == 'r')
+            {
+                insert_node(tree, current_node, RIGHT, strings_tree[idx + 1].begin_string);
+                current_node = current_node->right;            
+            }
+        }
+        else if(*current_position == '}')
+        {
+            ++current_position;
+            if(*current_position == '\0')
+            {
+
+            }
+            else
+            {
+                printf("Incorrect string.\n");
+                return ERR_TREE_BAD_STRING;
+            }
+        }
+        else
+        {
+            node->data = string_tree->begin_string;
         }
     }
 
