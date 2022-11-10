@@ -10,6 +10,8 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 {
     CHECK(tree != NULL, ERR_TREE_NULL_PTR);
 
+    int ret = parse_data(strings_tree, number_strings, tree);
+    CHECK(ret == AKTR_SUCCESS, ERR_TREE_BAD_STRING);
 
     int mode = get_mode();
     CHECK(mode != MODE_ERROR, ERR_AKTR_BAD_MODE);
@@ -17,7 +19,7 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
     switch (mode)
     {
     case AKINATOR:
-        /* code */
+        akinator(tree);
         break;
     
     case DEFINITION:
@@ -119,3 +121,58 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
 
     return AKTR_SUCCESS;
 }
+
+//=========================================================================
+
+int akinator(tree_t* tree)
+{
+    CHECK(tree != NULL, ERR_TREE_NULL_PTR);
+
+    node_t* node = tree->root;
+    char answ = '\0';
+
+    while((node->left != NULL) && (node->right != NULL))
+    {
+        printf("It is %s \n", node->data);
+        do
+        {
+            answ = getchar();
+        }
+        while ((answ != 'y') && (answ != 'n'));
+
+        if(answ == 'y')
+        {
+            node = node->left;
+        }
+        else if(answ == 'n')
+        {
+            node = node->right;
+        }
+    }
+
+    printf("It is %s? ", node->data);
+    do
+    {
+        answ = getchar();
+    }
+    while ((answ != 'y') && (answ != 'n'));
+
+    if (answ == 'y')
+    {
+        printf("Guessed right!\n");
+    }
+    else if (answ == 'n')
+    {
+        int status = unknowen(tree, node);
+        CHECK(status == SUCCESS, status);
+    }
+
+    FILE* save = fopen("../in_data.txt", "w");
+    CHECK(save != NULL, ERR_AKTR_BAD_FILE);
+    savedata(save, tree->root);
+    fclose(save);
+
+    return AKTR_SUCCESS;
+}
+
+//=========================================================================

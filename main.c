@@ -15,7 +15,7 @@ int main()
     tree_t tree;
     tree_ctor(&tree);
 
-    FILE* text = open_file("in_data.txt");
+    FILE* text = open_file("../in_data.txt");
     CHECK(text != NULL, ERR_AKTR_BAD_FILE);
 
     long count = count_symbols(text);
