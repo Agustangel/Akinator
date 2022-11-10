@@ -72,7 +72,9 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
     CHECK(tree != NULL, ERR_TREE_NULL_PTR);
     CHECK(strings_tree != NULL, ERR_TREE_NULL_PTR);
 
-    node_t* current_node = tree->root;
+    node_t* current_node = NULL;
+    node_t* senior_node = NULL;
+
     for(int idx = 0; idx < number_strings; ++idx)
     { 
         char* current_position = strings_tree[idx].begin_string;
@@ -81,6 +83,8 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
         if(tree->root == NULL)
         {
             inser_root(tree, tree->root, strings_tree[idx].begin_string);
+            senior_node = tree->root;
+            current_node = tree->root;
         }
         if(*current_position == '{')
         {
@@ -88,11 +92,13 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
             if(*current_position == 'l')
             {
                 insert_node(tree, current_node, LEFT, strings_tree[idx + 1].begin_string);
+                senior_node = current_node;
                 current_node = current_node->left;
             }
             else if(*current_position == 'r')
             {
                 insert_node(tree, current_node, RIGHT, strings_tree[idx + 1].begin_string);
+                senior_node = current_node;
                 current_node = current_node->right;            
             }
         }
@@ -101,17 +107,13 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
             ++current_position;
             if(*current_position == '\0')
             {
-
+                current_node = senior_node;
             }
             else
             {
                 printf("Incorrect string.\n");
                 return ERR_TREE_BAD_STRING;
             }
-        }
-        else
-        {
-            node->data = string_tree->begin_string;
         }
     }
 
