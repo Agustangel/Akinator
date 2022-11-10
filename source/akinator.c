@@ -6,18 +6,15 @@
 
 
 //=========================================================================
-int play(tree_t* tree)
+int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 {
     CHECK(tree != NULL, ERR_TREE_NULL_PTR);
 
-    FILE* text = open_file("in_data.txt");
-    CHECK(text != NULL, ERR_AKTR_BAD_FILE);
-
-    struct string_t* strings_tree = NULL;
-    strings_tree = get_strings_tree(text);
-    CHECK(strings_tree != NULL, ERR_TREE_NULL_PTR);
-
-    fclose(text);
+    node_t* current_node = tree->root;
+    for(int idx = 0; idx < number_strings; ++idx)
+    {
+        parse_data(strings_tree[idx], current_node); // ? node
+    }
 
     int mode = get_mode();
     CHECK(mode != MODE_ERROR, ERR_AKTR_BAD_MODE);
@@ -74,26 +71,26 @@ int get_mode()
 }
 
 //=========================================================================
-// from onegin
-void get_strings_tree(FILE* text, struct string_t* strings)
+
+int parse_data(struct string_t string_tree, node_t* node)
 {
-    long count = count_symbols(text);
-    HANDLE_ERROR(count, ERR_TXT_BAD_PTR, "ERROR: pointer outside file.\n");
+    char* current_position = string_tree->begin_string;
+    CHECK(current_position != NULL, ERR_TREE_NULL_PTR);
 
-    char* buffer = (char*) calloc(count, sizeof(char));
-    int ret = fill_buffer(text, buffer, sizeof(char), count);
-    HANDLE_ERROR(ret, ERR_TXT_BAD_READ, "ERROR: file read error.\n");
-
-    long number_strings = count_strings(buffer, count);
-    strings = get_strings(buffer, count, number_strings);
-
-}
-
-//=========================================================================
-
-int parse_data(struct string_t* strings_tree, node_t* node)
-{
-
+    if(*current_position == '{')
+    {
+        ++current_position;
+        if(*current_position == 'l')
+        {
+            node = node->left;
+            // CHECK node
+        }
+        else if(*current_position == 'r')
+        {
+            node = node->right;
+            // CHECK node            
+        }
+    }
 
     return AKTR_SUCCESS;
 }
