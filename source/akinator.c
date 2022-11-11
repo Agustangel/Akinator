@@ -217,24 +217,25 @@ char* get_answer()
 
 //=========================================================================
 
-int savedata(FILE* file, node_t* node)
+int savedata(FILE* file, node_t* node, node_t* root)
 {
-    fprintf(file, "%s\n", tree->data);
+    fprintf(file, "%s\n", node->data);
 
-    if (tree->left != NULL)
+    if(node->left != NULL)
     {
-        fprintf(outfile, "{l\n");
-        savedata(file, tree->left);
+        fprintf(file, "{l\n");
+        savedata(file, node->left);
     }
-    if (tree->right != NULL)
+    if(node->right != NULL)
     {
-        fprintf(outfile, "{r\n");
-        savedata(file, tree->right);
+        fprintf(file, "{r\n");
+        savedata(file, node->right);
 
     }
-    if (strcmp(tree->data, BEG_VAL) != 0)
+
+    if(node != root)
     {
-        fprintf(outfile, "}\n");
+        fprintf(file, "}\n");
     }
 
     return AKTR_SUCCESS;
