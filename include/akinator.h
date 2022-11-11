@@ -1,5 +1,7 @@
 
 
+#define MAX_LEN 128
+
 //=========================================================================
 
 enum akinator_codes
@@ -24,4 +26,6 @@ enum MODES
 //=========================================================================
 
 int get_mode();
-int play(tree_t* tree);
+int play(tree_t* tree, struct string_t* strings_tree, long number_strings);
+int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree);
+int akinator(tree_t* tree);

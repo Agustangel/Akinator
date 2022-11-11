@@ -167,10 +167,58 @@ int akinator(tree_t* tree)
         CHECK(status == SUCCESS, status);
     }
 
-    FILE* save = fopen("../in_data.txt", "w");
-    CHECK(save != NULL, ERR_AKTR_BAD_FILE);
-    savedata(save, tree->root);
-    fclose(save);
+    FILE* savefile = fopen("../in_data.txt", "w");
+    CHECK(savefile != NULL, ERR_AKTR_BAD_FILE);
+    savedata(savefile, tree->root);
+    fclose(savefile);
+
+    return AKTR_SUCCESS;
+}
+
+//=========================================================================
+
+int unknowen(tree_t* tree, node_t* node)
+{
+    CHECK(tree != NULL, ERR_TREE_NULL_PTR);
+    CHECK(node != NULL, ERR_TREE_NULL_PTR);
+
+    printf("What did you mean? ");
+    char* newdata = get_answer();
+    CHECK(newdata != NULL, ERR_AKTR_OUT_MEMORY);
+
+    char* olddata = node->data;
+
+    printf("What is the difference between %s and %s in all? ", newdata, node->data);
+    char* node->data = get_answer();
+    CHECK(newdata != NULL, ERR_AKTR_OUT_MEMORY);
+
+    insert_node(tree, node, LEFT, olddata);
+    insert_node(tree, node, RIGHT, newdata);
+
+    return AKTR_SUCCESS; 
+}
+
+//=========================================================================
+
+char* get_answer()
+{
+    char* data = NULL;
+    size_t len = MAX_LEN;
+    CHECK(getline(&data, &len, stdin) != -1, NULL);
+
+    char* last_symbol = strch(data, '\n');
+    if(last_symbol != NULL)
+    {
+        last_symbol = '\0';
+    }
+
+    return data;
+}
+
+//=========================================================================
+
+int savedata(FILE* savefile, node_t* root)
+{
 
     return AKTR_SUCCESS;
 }
