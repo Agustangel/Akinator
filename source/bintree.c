@@ -20,7 +20,7 @@ int tree_ctor(tree_t* tree)
 
 //=========================================================================
 
-static node_t* tree_node_ctor(const elem_t value)
+node_t* tree_node_ctor(const elem_t value)
 {
     node_t* node = (node_t*) calloc(1, sizeof(node_t));
     CHECK(node !=  NULL, NULL);
@@ -49,7 +49,7 @@ int tree_dtor(tree_t* tree)
 
 //=========================================================================
 
-static void tree_node_dtor(node_t* node)
+void tree_node_dtor(node_t* node)
 {
     if (node == NULL)
     {
@@ -111,7 +111,7 @@ int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value)
 
 //=========================================================================
 
-static void delete_node(node_t* node)
+void delete_node(node_t* node)
 {
     CHECK(node !=  NULL, ERR_TREE_NULL_PTR);
 
@@ -200,7 +200,7 @@ int tree_dump(tree_t* tree, int print_mode)
 
 //=========================================================================
 
-static void print_nodes(node_t* node, int print_mode)
+void print_nodes(node_t* node, int print_mode)
 {
     if (node == NULL)
     {
@@ -250,3 +250,45 @@ static void print_nodes(node_t* node, int print_mode)
 }
 
 //=========================================================================
+
+void tree_dump_graph(tree_t* tree, char* dot_out)
+{
+    CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
+
+    FILE* file_dot = fopen(dot_out, "wb");
+    CHECK(file_dot !=  NULL, ERR_TREE_BAD_FILE);
+
+    fprintf(file_dot, "digraph {\n");
+    fprintf(file_dot, "\tnode[shape = \"cube\", color = \"#800000\", fontsize = 15, style = \"filled\", fillcolor = \"#88CEFA\"];\n"
+                      "\tedge[color = \"#190970\", fontsize = 11];\n");
+
+    node_dump_graph(tree->root, file_dot);
+    fprintf(file_dot, "}");
+
+    fclose(file_dot);
+}
+
+//=========================================================================
+
+void node_dump_graph(node_t* node, FILE* dot_out)
+{
+    CHECK(node    !=  NULL, ERR_TREE_NULL_PTR);
+    CHECK(dot_out !=  NULL, ERR_TREE_BAD_FILE);
+
+    if (node->left != NULL)
+    {
+        fprintf(dot_out, "\n\t\t\"%s\"[shape = \"ellipse\", color=\"#900000\", style=\"filled\", fillcolor = \"#D0FDFF\"];\n"
+                          "\t\t\"%s\"->\"%s\"[label = \"YES\"];\n", node->data, node->data, (node->left)->data);
+
+        node_dump_graph(node->left, dot_out);
+    }
+
+    if (node->right != NULL)
+    {
+        fprintf(dot_out,
+                "\n\t\t\"%s\"[shape = \"egg\", color=\"#900000\", style=\"filled\", fillcolor = \"#D0FDFF\"];\n"
+                "\t\t\"%s\"->\"%s\"[label = \"NO\"];\n", node->data, node->data, (node->right)->data);
+
+        node_dump_graph(node->right, dot_out);
+    }
+}

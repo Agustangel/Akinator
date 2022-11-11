@@ -39,7 +39,8 @@ enum tree_codes
     ERR_TREE_OUT_MEMORY       = 2,
     ERR_TREE_BAD_SIZE         = 3,
     ERR_TREE_BAD_POSITION     = 4,
-    ERR_TREE_BAD_STRING       = 5
+    ERR_TREE_BAD_STRING       = 5,
+    ERR_TREE_BAD_FILE         = 6
 };
 
 enum node_codes

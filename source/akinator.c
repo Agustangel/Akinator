@@ -19,7 +19,8 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
     switch (mode)
     {
     case AKINATOR:
-        akinator(tree);
+        int status = akinator(tree);
+        CHECK(status == AKTR_SUCCESS, status);
         break;
     
     case DEFINITION:
