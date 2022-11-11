@@ -166,8 +166,8 @@ int tree_dump(tree_t* tree, int print_mode)
                 TREE_ERROR(ERR_TREE_NULL_PTR);
                 break;
 
-            case (1 << ERR_TREE_BAD_PTR):
-                TREE_ERROR(ERR_TREE_BAD_PTR);
+            case (1 << ERR_TREE_BAD_FILE):
+                TREE_ERROR(ERR_TREE_BAD_FILE);
                 break;
 
             case (1 << ERR_TREE_OUT_MEMORY):

@@ -69,8 +69,8 @@ static int ret_;
         TREE_ERROR(ERR_TREE_BAD_POSITION);                                          \
         break;                                                                      \
                                                                                     \
-    case (1 << ERR_TREE_BAD_PTR):                                                   \
-        TREE_ERROR(ERR_TREE_BAD_PTR);                                               \
+    case (1 << ERR_TREE_BAD_FILE):                                                  \
+        TREE_ERROR(ERR_TREE_BAD_FILE);                                              \
         break;                                                                      \
                                                                                     \
     case (1 << ERR_TREE_BAD_SIZE):                                                  \

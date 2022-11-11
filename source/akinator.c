@@ -231,7 +231,6 @@ int savedata(FILE* file, node_t* node, node_t* root)
     {
         fprintf(file, "{r\n");
         savedata(file, node->right);
-
     }
 
     if(node != root)

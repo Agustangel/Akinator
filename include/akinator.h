@@ -1,4 +1,4 @@
-
+#pragma once
 
 #define MAX_LEN 128
 
