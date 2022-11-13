@@ -13,11 +13,11 @@ int main()
 {
     logger_init(1, "akinator.log");
     logger_set_level(INFO);
-
+    
     tree_t tree;
     tree_ctor(&tree);
 
-    FILE* text = open_file("../in_data.txt");
+    FILE* text = open_file("in_data.txt");
     CHECK(text != NULL, ERR_AKTR_BAD_FILE);
 
     long count = count_symbols(text);
@@ -36,7 +36,7 @@ int main()
     do
     {
         ret = play(&tree, strings_tree, number_strings);
-
+        
     } while(ret == ERR_AKTR_BAD_MODE);
 
     free(buffer);

@@ -63,7 +63,7 @@ node_t* tree_node_ctor(const elem_t value);
 int tree_dtor(tree_t* tree);
 void tree_node_dtor(node_t* node);
 int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value);
-int inser_root(tree_t* tree, node_t* node, const elem_t value);
+int insert_root(tree_t* tree, const elem_t value);
 int delete_node(node_t* node);
 int tree_verify(tree_t* tree);
 void print_nodes(node_t* node, int print_mode);

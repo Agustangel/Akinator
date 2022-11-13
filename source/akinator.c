@@ -14,14 +14,14 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 {
     CHECK(tree         != NULL, ERR_TREE_NULL_PTR);
     CHECK(strings_tree != NULL, ERR_TREE_NULL_PTR);
-
-    int ret = parse_data(strings_tree, number_strings, tree);
-    CHECK(ret == AKTR_SUCCESS, ERR_TREE_BAD_STRING);
+   
+    int status = 0;
+    status = parse_data(strings_tree, number_strings, tree, tree->root);
+    CHECK(status == AKTR_SUCCESS, status);
 
     int mode = get_mode();
     CHECK(mode != MODE_ERROR, ERR_AKTR_BAD_MODE);
-
-    int status = 0;
+    
     switch (mode)
     {
     case DIVINATION:
@@ -35,7 +35,7 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
         break;
 
     case VISUALIZATION:
-        status = tree_dump_graph(tree, "../dot_out.dot");
+        status = tree_dump_graph(tree, "graph_phys.dot");
         CHECK(status == TREE_SUCCESS, status);
         break;
 
@@ -50,7 +50,7 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 
 int get_mode()
 {
-    printf("Enter game mode: \b");
+    printf("Enter game mode:\n");
     printf("(1) Divination;\n");
     printf("(2) Definition;\n");
     printf("(3) Visualization;\n");
@@ -78,54 +78,41 @@ int get_mode()
 
 //=========================================================================
 
-int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
+int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree, node_t* node)
 {
     CHECK(tree         != NULL, ERR_TREE_NULL_PTR);
     CHECK(strings_tree != NULL, ERR_TREE_NULL_PTR);
+    CHECK(number_strings > 0, ERR_AKTR_BAD_SIZE);
 
-    node_t* current_node = NULL;
-    node_t* senior_node = NULL;
-
-    for(int idx = 0; idx < number_strings; ++idx)
-    { 
-        char* current_position = strings_tree[idx].begin_string;
-        CHECK(current_position != NULL, ERR_TREE_NULL_PTR);
-
-        if(tree->root == NULL)
-        {
-            inser_root(tree, tree->root, strings_tree[idx].begin_string);
-            senior_node = tree->root;
-            current_node = tree->root;
-        }
-        if(*current_position == '{')
-        {
-            ++current_position;
-            if(*current_position == 'l')
-            {
-                insert_node(tree, current_node, LEFT, strings_tree[idx + 1].begin_string);
-                senior_node = current_node;
-                current_node = current_node->left;
-            }
-            else if(*current_position == 'r')
-            {
-                insert_node(tree, current_node, RIGHT, strings_tree[idx + 1].begin_string);
-                senior_node = current_node;
-                current_node = current_node->right;            
-            }
-        }
-        else if(*current_position == '}')
-        {
-            ++current_position;
-            if(*current_position == '\0')
-            {
-                current_node = senior_node;
-            }
-            else
-            {
-                printf("Incorrect string.\n");
-                return ERR_TREE_BAD_STRING;
-            }
-        }
+    static int idx = 0;
+    if(tree->root == NULL)
+    {
+        insert_root(tree, strings_tree[idx].begin_string);
+        ++idx;
+        node = tree->root;
+        parse_data(strings_tree, number_strings, tree, node);
+    }
+    
+    CHECK((idx + 1) != number_strings, AKTR_SUCCESS);
+    if(strcasecmp(strings_tree[idx].begin_string, "{l") == 0)
+    {
+        insert_node(tree, node, LEFT, strings_tree[idx + 1].begin_string);
+        idx += 2;
+        parse_data(strings_tree, number_strings, tree, node->left);
+    }
+    
+    CHECK((idx + 1) != number_strings, AKTR_SUCCESS);
+    if(strcasecmp(strings_tree[idx].begin_string, "{r") == 0)
+    {
+        insert_node(tree, node, RIGHT, strings_tree[idx + 1].begin_string);
+        idx += 2;
+        parse_data(strings_tree, number_strings, tree, node->right);
+    }
+    
+    CHECK((idx + 1) != number_strings, AKTR_SUCCESS);
+    if(strcasecmp(strings_tree[idx].begin_string, "}") == 0)
+    {
+        idx++;
     }
 
     return AKTR_SUCCESS;
@@ -142,7 +129,7 @@ int akinator(tree_t* tree)
 
     while((node->left != NULL) && (node->right != NULL))
     {
-        printf("It is %s \n", node->data);
+        printf("It is %s\n", node->data);
         do
         {
             answ = getchar();
@@ -159,7 +146,7 @@ int akinator(tree_t* tree)
         }
     }
 
-    printf("It is %s? ", node->data);
+    printf("It is %s\n", node->data);
     do
     {
         answ = getchar();
@@ -177,7 +164,7 @@ int akinator(tree_t* tree)
         CHECK(status == AKTR_SUCCESS, status);
     }
 
-    FILE* savefile = fopen("../in_data.txt", "w");
+    FILE* savefile = fopen("in_data.txt", "w");
     CHECK(savefile != NULL, ERR_AKTR_BAD_FILE);
     savedata(savefile, tree->root, tree->root);
     fclose(savefile);
@@ -192,18 +179,18 @@ int unknowen(tree_t* tree, node_t* node)
     CHECK(tree != NULL, ERR_TREE_NULL_PTR);
     CHECK(node != NULL, ERR_TREE_NULL_PTR);
 
-    printf("What did you mean? ");
+    printf("What did you mean?\n");
     char* newdata = get_answer();
     CHECK(newdata != NULL, ERR_AKTR_OUT_MEMORY);
 
     char* olddata = node->data;
 
-    printf("What is the difference between %s and %s in all? ", newdata, node->data);
+    printf("What is the difference between %s and %s in all?\n", newdata, node->data);
     node->data = get_answer();
     CHECK(node->data != NULL, ERR_AKTR_OUT_MEMORY);
 
-    insert_node(tree, node, LEFT, olddata);
-    insert_node(tree, node, RIGHT, newdata);
+    insert_node(tree, node, LEFT, newdata);
+    insert_node(tree, node, RIGHT, olddata);
 
     return AKTR_SUCCESS; 
 }

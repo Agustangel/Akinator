@@ -63,10 +63,9 @@ void tree_node_dtor(node_t* node)
 
 //=========================================================================
 
-int inser_root(tree_t* tree, node_t* node, const elem_t value)
+int insert_root(tree_t* tree, const elem_t value)
 {
     CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
-    CHECK(node !=  NULL, ERR_TREE_NULL_PTR);
 
     node_t *newnode = tree_node_ctor(value);
     CHECK(newnode != NULL, ERR_TREE_OUT_MEMORY);
@@ -268,6 +267,10 @@ int tree_dump_graph(tree_t* tree, char* dot_out)
     fprintf(file_dot, "}");
 
     fclose(file_dot);
+
+    system("dot -Tjpeg -ograph_phys.jpeg graph_phys.dot");
+    system("convert graph_log.jpeg graph_phys.jpeg -append graph_array.jpeg");
+    system("gwenview graph_array.jpeg");
 
     return TREE_SUCCESS;
 }

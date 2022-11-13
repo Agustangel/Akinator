@@ -29,7 +29,7 @@ enum MODES
 
 int get_mode();
 int play(tree_t* tree, struct string_t* strings_tree, long number_strings);
-int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree);
+int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree, node_t* node);
 int akinator(tree_t* tree);
 int unknowen(tree_t* tree, node_t* node);
 void clear_buffer();
