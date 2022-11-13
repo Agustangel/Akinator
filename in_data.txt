@@ -14,7 +14,7 @@ Empire_at_War
 {r
 MMORPG
 {l
-COnnected_with_SW
+Connected_with_SW
 {l
 SW_KOTOR
 }
@@ -49,7 +49,7 @@ The_LOTR
 }
 }
 {r
-ЕThere are steam engines
+There_are_steam_engines
 {l
 SteamPunk
 }

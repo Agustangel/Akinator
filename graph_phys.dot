@@ -21,13 +21,13 @@ digraph {
 		"Strategy"->"MMORPG"[label = "NO"];
 
 		"MMORPG"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
-		"MMORPG"->"COnnected_with_SW"[label = "YES"];
+		"MMORPG"->"Connected_with_SW"[label = "YES"];
 
-		"COnnected_with_SW"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
-		"COnnected_with_SW"->"SW_KOTOR"[label = "YES"];
+		"Connected_with_SW"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Connected_with_SW"->"SW_KOTOR"[label = "YES"];
 
-		"COnnected_with_SW"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
-		"COnnected_with_SW"->"Destiny"[label = "NO"];
+		"Connected_with_SW"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Connected_with_SW"->"Destiny"[label = "NO"];
 
 		"MMORPG"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
 		"MMORPG"->"Helldivers"[label = "NO"];
@@ -54,11 +54,11 @@ digraph {
 		"Before_the_original_trilogy"->"The_LOTR"[label = "NO"];
 
 		"TOLKIEN"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
-		"TOLKIEN"->"ЕThere are steam engines"[label = "NO"];
+		"TOLKIEN"->"There_are_steam_engines"[label = "NO"];
 
-		"ЕThere are steam engines"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
-		"ЕThere are steam engines"->"SteamPunk"[label = "YES"];
+		"There_are_steam_engines"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"There_are_steam_engines"->"SteamPunk"[label = "YES"];
 
-		"ЕThere are steam engines"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
-		"ЕThere are steam engines"->"CyberPunk"[label = "NO"];
+		"There_are_steam_engines"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"There_are_steam_engines"->"CyberPunk"[label = "NO"];
 }
