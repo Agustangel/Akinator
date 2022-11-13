@@ -251,7 +251,7 @@ void print_nodes(node_t* node, int print_mode)
 
 //=========================================================================
 
-void tree_dump_graph(tree_t* tree, char* dot_out)
+int tree_dump_graph(tree_t* tree, char* dot_out)
 {
     CHECK(tree !=  NULL, ERR_TREE_NULL_PTR);
 
@@ -266,6 +266,8 @@ void tree_dump_graph(tree_t* tree, char* dot_out)
     fprintf(file_dot, "}");
 
     fclose(file_dot);
+
+    return TREE_SUCCESS;
 }
 
 //=========================================================================

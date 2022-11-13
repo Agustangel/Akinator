@@ -18,17 +18,19 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 
     switch (mode)
     {
-    case AKINATOR:
+    case DIVINATION:
         int status = akinator(tree);
         CHECK(status == AKTR_SUCCESS, status);
         break;
     
     case DEFINITION:
-        /* code */
+        int status = definition(tree);
+        CHECK(status == AKTR_SUCCESS, status);
         break;
 
-    case DIFFERENCE:
-        /* code */
+    case VISUALIZATION:
+        int status = tree_dump_graph(tree, "dot_out.dot");
+        CHECK(status == TREE_SUCCESS, status);
         break;
 
     default:
@@ -43,9 +45,9 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 int get_mode()
 {
     printf("Enter game mode: \b");
-    printf("(1) Akinator;\n");
+    printf("(1) Divination;\n");
     printf("(2) Definition;\n");
-    printf("(3) Difference;\n");
+    printf("(3) Visualization;\n");
 
     int resp = EOF;
     while ((resp = getchar()) != EOF)
@@ -53,11 +55,11 @@ int get_mode()
         switch (resp)
         {
             case '1':
-                return AKINATOR;
+                return DIVINATION;
             case '2':
                 return DEFINITION;
             case '3':
-                return DIFFERENCE;
+                return VISUALIZATION;
 
             default:
                 printf("Undefined mode. Input again\n");
@@ -164,6 +166,7 @@ int akinator(tree_t* tree)
     }
     else if(answ == 'n')
     {
+        clear_buffer();
         int status = unknowen(tree, node);
         CHECK(status == SUCCESS, status);
     }
@@ -267,7 +270,7 @@ int definition(tree_t* tree)
 
     if(definition_rec(tree->root, lookdata))
     {
-
+        printf("I did it!\n");
     }
     else
     {
@@ -283,9 +286,37 @@ int definition(tree_t* tree)
 
 bool definition_rec(node_t* node, char* object)
 {
-    CHECK(node   != NULL, ERR_TREE_NULL_PTR);
-    CHECK(object != NULL, ERR_AKTR_NULL_PTR);
+    CHECK(node   != NULL, false);
+    CHECK(object != NULL, false);
 
+    if((node->left != NULL) && (node->right != NULL))
+    {
+        if(definition_rec(node->left, object))
+        {
+            printf(", %s", node->data);
+            return true;
+        }
+        else if(definition_rec(node->right, object))
+        {
+            printf(", not %s", node->data);
+            return true; 
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        CHECK(node->data != NULL, false);
+        if(strcasecmp(node->data, object) == 0)
+        {
+            printf("%s is defined");
+            return true;
+        }
+    }
+
+    return false;
 }
 
 //=========================================================================
