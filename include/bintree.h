@@ -59,10 +59,14 @@ enum print_mode
 //=========================================================================
 
 int tree_ctor(tree_t* tree);
-static node_t* tree_node_ctor(const elem_t value);
+node_t* tree_node_ctor(const elem_t value);
 int tree_dtor(tree_t* tree);
-static void tree_node_dtor(node_t* node);
+void tree_node_dtor(node_t* node);
 int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value);
+int inser_root(tree_t* tree, node_t* node, const elem_t value);
+int delete_node(node_t* node);
 int tree_verify(tree_t* tree);
-static void print_nodes(node_t* node, int print_mode);
-int tree_dump(tree_t* tree);
+void print_nodes(node_t* node, int print_mode);
+int tree_dump(tree_t* tree, int print_mode);
+int tree_dump_graph(tree_t* tree, char* dot_out);
+int node_dump_graph(node_t* node, FILE* dot_out);

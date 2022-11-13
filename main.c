@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <logger.h>
 #include <onegin.h>
 
@@ -30,13 +32,14 @@ int main()
     long number_strings = count_strings(buffer, count);
     struct string_t* strings_tree = get_strings(buffer, count, number_strings);
 
-    int ret = 0;
+    ret = 0;
     do
     {
         ret = play(&tree, strings_tree, number_strings);
 
-    } while (ret == ERR_AKTR_BAD_MODE);
+    } while(ret == ERR_AKTR_BAD_MODE);
 
+    free(buffer);
     tree_dtor(&tree);
     logger_finalize(file);
     

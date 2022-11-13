@@ -1,7 +1,9 @@
 #pragma once
 
-#define MAX_LEN 128
+#include "bintree.h"
 
+
+#define MAX_LEN 128
 //=========================================================================
 
 enum akinator_codes

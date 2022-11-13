@@ -111,7 +111,7 @@ int insert_node(tree_t* tree, node_t* node, int node_codes, const elem_t value)
 
 //=========================================================================
 
-void delete_node(node_t* node)
+int delete_node(node_t* node)
 {
     CHECK(node !=  NULL, ERR_TREE_NULL_PTR);
 
@@ -126,6 +126,8 @@ void delete_node(node_t* node)
 
     free(node);
     node = NULL;
+
+    return TREE_SUCCESS;
 }
 
 //=========================================================================
@@ -191,7 +193,7 @@ int tree_dump(tree_t* tree, int print_mode)
     printf("-----------------------------------------------------------\n");
     printf("\n");
 
-    printf("size = %d\n", tree->size);
+    printf("size = %zu\n", tree->size);
     printf("-----------------------------------------------------------\n");
     print_nodes(tree->root, print_mode);
 
@@ -209,7 +211,7 @@ void print_nodes(node_t* node, int print_mode)
 
     if(print_mode == PREORDER)
     {
-        printf("%d ", node->data);
+        printf("%s ", node->data);
         if(node->left != NULL)
         {
             print_nodes(node->left, PREORDER);
@@ -225,7 +227,7 @@ void print_nodes(node_t* node, int print_mode)
         {
             print_nodes(node->left, INORDER);
         }
-        printf("%d ", node->data);
+        printf("%s ", node->data);
         if(node->right != NULL)
         {
             print_nodes(node->right, INORDER);
@@ -241,7 +243,7 @@ void print_nodes(node_t* node, int print_mode)
         {
             print_nodes(node->right, POSTORDER);
         }
-        printf("%d ", node->data);
+        printf("%s ", node->data);
     }
     else
     {
@@ -272,7 +274,7 @@ int tree_dump_graph(tree_t* tree, char* dot_out)
 
 //=========================================================================
 
-void node_dump_graph(node_t* node, FILE* dot_out)
+int node_dump_graph(node_t* node, FILE* dot_out)
 {
     CHECK(node    !=  NULL, ERR_TREE_NULL_PTR);
     CHECK(dot_out !=  NULL, ERR_TREE_BAD_FILE);
@@ -293,4 +295,6 @@ void node_dump_graph(node_t* node, FILE* dot_out)
 
         node_dump_graph(node->right, dot_out);
     }
+
+    return TREE_SUCCESS;
 }

@@ -1,14 +1,19 @@
 
 #include <stdio.h>
-#include <akinator.h>
-#include <bintree.h>
 #include <onegin.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include "akinator.h"
+#include "bintree.h"
+#include "debug.h"
 
 //=========================================================================
 int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
 {
-    CHECK(tree != NULL, ERR_TREE_NULL_PTR);
+    CHECK(tree         != NULL, ERR_TREE_NULL_PTR);
+    CHECK(strings_tree != NULL, ERR_TREE_NULL_PTR);
 
     int ret = parse_data(strings_tree, number_strings, tree);
     CHECK(ret == AKTR_SUCCESS, ERR_TREE_BAD_STRING);
@@ -16,20 +21,21 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
     int mode = get_mode();
     CHECK(mode != MODE_ERROR, ERR_AKTR_BAD_MODE);
 
+    int status = 0;
     switch (mode)
     {
     case DIVINATION:
-        int status = akinator(tree);
+        status = akinator(tree);
         CHECK(status == AKTR_SUCCESS, status);
         break;
     
     case DEFINITION:
-        int status = definition(tree);
+        status = definition(tree);
         CHECK(status == AKTR_SUCCESS, status);
         break;
 
     case VISUALIZATION:
-        int status = tree_dump_graph(tree, "dot_out.dot");
+        status = tree_dump_graph(tree, "../dot_out.dot");
         CHECK(status == TREE_SUCCESS, status);
         break;
 
@@ -37,7 +43,7 @@ int play(tree_t* tree, struct string_t* strings_tree, long number_strings)
         break;
     }
 
-    return TREE_SUCCESS;
+    return AKTR_SUCCESS;
 }
 
 //=========================================================================
@@ -74,7 +80,7 @@ int get_mode()
 
 int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree)
 {
-    CHECK(tree != NULL, ERR_TREE_NULL_PTR);
+    CHECK(tree         != NULL, ERR_TREE_NULL_PTR);
     CHECK(strings_tree != NULL, ERR_TREE_NULL_PTR);
 
     node_t* current_node = NULL;
@@ -168,12 +174,12 @@ int akinator(tree_t* tree)
     {
         clear_buffer();
         int status = unknowen(tree, node);
-        CHECK(status == SUCCESS, status);
+        CHECK(status == AKTR_SUCCESS, status);
     }
 
     FILE* savefile = fopen("../in_data.txt", "w");
     CHECK(savefile != NULL, ERR_AKTR_BAD_FILE);
-    savedata(savefile, tree->root);
+    savedata(savefile, tree->root, tree->root);
     fclose(savefile);
 
     return AKTR_SUCCESS;
@@ -193,7 +199,7 @@ int unknowen(tree_t* tree, node_t* node)
     char* olddata = node->data;
 
     printf("What is the difference between %s and %s in all? ", newdata, node->data);
-    char* node->data = get_answer();
+    node->data = get_answer();
     CHECK(node->data != NULL, ERR_AKTR_OUT_MEMORY);
 
     insert_node(tree, node, LEFT, olddata);
@@ -218,7 +224,7 @@ char* get_answer()
     size_t len = MAX_LEN;
     CHECK(getline(&data, &len, stdin) != -1, NULL);
 
-    char* last_symbol = strch(data, '\n');
+    char* last_symbol = strchr(data, '\n');
     if(last_symbol != NULL)
     {
         last_symbol = '\0';
@@ -311,7 +317,7 @@ bool definition_rec(node_t* node, char* object)
         CHECK(node->data != NULL, false);
         if(strcasecmp(node->data, object) == 0)
         {
-            printf("%s is defined");
+            printf("%s is defined", node->data);
             return true;
         }
     }
