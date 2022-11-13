@@ -1,0 +1,64 @@
+digraph {
+	node[shape = "cube", color = "#800000", fontsize = 15, style = "filled", fillcolor = "#88CEFA"];
+	edge[color = "#190970", fontsize = 11];
+
+		"Computer_Game"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Computer_Game"->"Space_Fantasy"[label = "YES"];
+
+		"Space_Fantasy"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Space_Fantasy"->"Possibility_of_fucking_aliens"[label = "YES"];
+
+		"Possibility_of_fucking_aliens"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Possibility_of_fucking_aliens"->"Mass_Effect"[label = "YES"];
+
+		"Possibility_of_fucking_aliens"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Possibility_of_fucking_aliens"->"Strategy"[label = "NO"];
+
+		"Strategy"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Strategy"->"Empire_at_War"[label = "YES"];
+
+		"Strategy"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Strategy"->"MMORPG"[label = "NO"];
+
+		"MMORPG"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"MMORPG"->"COnnected_with_SW"[label = "YES"];
+
+		"COnnected_with_SW"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"COnnected_with_SW"->"SW_KOTOR"[label = "YES"];
+
+		"COnnected_with_SW"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"COnnected_with_SW"->"Destiny"[label = "NO"];
+
+		"MMORPG"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"MMORPG"->"Helldivers"[label = "NO"];
+
+		"Space_Fantasy"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Space_Fantasy"->"Gothics"[label = "NO"];
+
+		"Computer_Game"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Computer_Game"->"Film"[label = "NO"];
+
+		"Film"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Film"->"StarTrek"[label = "YES"];
+
+		"Film"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Film"->"TOLKIEN"[label = "NO"];
+
+		"TOLKIEN"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"TOLKIEN"->"Before_the_original_trilogy"[label = "YES"];
+
+		"Before_the_original_trilogy"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Before_the_original_trilogy"->"Silmarilion"[label = "YES"];
+
+		"Before_the_original_trilogy"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"Before_the_original_trilogy"->"The_LOTR"[label = "NO"];
+
+		"TOLKIEN"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"TOLKIEN"->"ЕThere are steam engines"[label = "NO"];
+
+		"ЕThere are steam engines"[shape = "ellipse", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"ЕThere are steam engines"->"SteamPunk"[label = "YES"];
+
+		"ЕThere are steam engines"[shape = "egg", color="#900000", style="filled", fillcolor = "#D0FDFF"];
+		"ЕThere are steam engines"->"CyberPunk"[label = "NO"];
+}

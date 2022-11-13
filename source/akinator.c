@@ -94,7 +94,7 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree,
     }
     
     CHECK((idx + 1) != number_strings, AKTR_SUCCESS);
-    if(strcasecmp(strings_tree[idx].begin_string, "{l") == 0)
+    if(strcmp(strings_tree[idx].begin_string, "{l") == 0)
     {
         insert_node(tree, node, LEFT, strings_tree[idx + 1].begin_string);
         idx += 2;
@@ -102,7 +102,7 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree,
     }
     
     CHECK((idx + 1) != number_strings, AKTR_SUCCESS);
-    if(strcasecmp(strings_tree[idx].begin_string, "{r") == 0)
+    if(strcmp(strings_tree[idx].begin_string, "{r") == 0)
     {
         insert_node(tree, node, RIGHT, strings_tree[idx + 1].begin_string);
         idx += 2;
@@ -110,7 +110,7 @@ int parse_data(struct string_t* strings_tree, long number_strings, tree_t* tree,
     }
     
     CHECK((idx + 1) != number_strings, AKTR_SUCCESS);
-    if(strcasecmp(strings_tree[idx].begin_string, "}") == 0)
+    if(strcmp(strings_tree[idx].begin_string, "}") == 0)
     {
         idx++;
     }
@@ -214,7 +214,7 @@ char* get_answer()
     char* last_symbol = strchr(data, '\n');
     if(last_symbol != NULL)
     {
-        last_symbol = '\0';
+        *last_symbol = '\0';
     }
 
     return data;
@@ -263,6 +263,7 @@ int definition(tree_t* tree)
 
     if(definition_rec(tree->root, lookdata))
     {
+        printf("\n");
         printf("I did it!\n");
     }
     else
@@ -302,7 +303,7 @@ bool definition_rec(node_t* node, char* object)
     else
     {
         CHECK(node->data != NULL, false);
-        if(strcasecmp(node->data, object) == 0)
+        if((strcmp(object, node->data) == 0))
         {
             printf("%s is defined", node->data);
             return true;
