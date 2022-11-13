@@ -139,7 +139,7 @@ int akinator(tree_t* tree)
         {
             answ = getchar();
         }
-        while ((answ != 'y') && (answ != 'n'));
+        while((answ != 'y') && (answ != 'n'));
 
         if(answ == 'y')
         {
@@ -156,13 +156,13 @@ int akinator(tree_t* tree)
     {
         answ = getchar();
     }
-    while ((answ != 'y') && (answ != 'n'));
+    while((answ != 'y') && (answ != 'n'));
 
-    if (answ == 'y')
+    if(answ == 'y')
     {
         printf("Guessed right!\n");
     }
-    else if (answ == 'n')
+    else if(answ == 'n')
     {
         int status = unknowen(tree, node);
         CHECK(status == SUCCESS, status);
@@ -191,12 +191,20 @@ int unknowen(tree_t* tree, node_t* node)
 
     printf("What is the difference between %s and %s in all? ", newdata, node->data);
     char* node->data = get_answer();
-    CHECK(newdata != NULL, ERR_AKTR_OUT_MEMORY);
+    CHECK(node->data != NULL, ERR_AKTR_OUT_MEMORY);
 
     insert_node(tree, node, LEFT, olddata);
     insert_node(tree, node, RIGHT, newdata);
 
     return AKTR_SUCCESS; 
+}
+
+//=========================================================================
+
+void clear_buffer()
+{
+    int ch = 0;
+    while((ch = getchar()) != '\n' && ch != EOF);
 }
 
 //=========================================================================
@@ -220,17 +228,21 @@ char* get_answer()
 
 int savedata(FILE* file, node_t* node, node_t* root)
 {
+    CHECK(file != NULL, ERR_TREE_BAD_FILE);
+    CHECK(node != NULL, ERR_TREE_NULL_PTR);
+    CHECK(root != NULL, ERR_TREE_NULL_PTR);
+
     fprintf(file, "%s\n", node->data);
 
     if(node->left != NULL)
     {
         fprintf(file, "{l\n");
-        savedata(file, node->left);
+        savedata(file, node->left, root);
     }
     if(node->right != NULL)
     {
         fprintf(file, "{r\n");
-        savedata(file, node->right);
+        savedata(file, node->right, root);
     }
 
     if(node != root)
@@ -239,6 +251,41 @@ int savedata(FILE* file, node_t* node, node_t* root)
     }
 
     return AKTR_SUCCESS;
+}
+
+//=========================================================================
+
+int definition(tree_t* tree)
+{
+    CHECK(tree != NULL, ERR_TREE_NULL_PTR);
+
+    clear_buffer();
+
+    printf("Input something to definition: \n");
+    char* lookdata = get_answer();
+    CHECK(lookdata != NULL, ERR_AKTR_OUT_MEMORY);
+
+    if(definition_rec(tree->root, lookdata))
+    {
+
+    }
+    else
+    {
+        printf("Object not found\n");
+    }
+
+    free(lookdata);
+
+    return AKTR_SUCCESS;
+}
+
+//=========================================================================
+
+bool definition_rec(node_t* node, char* object)
+{
+    CHECK(node   != NULL, ERR_TREE_NULL_PTR);
+    CHECK(object != NULL, ERR_AKTR_NULL_PTR);
+
 }
 
 //=========================================================================
