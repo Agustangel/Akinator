@@ -3,7 +3,6 @@
 #include "bintree.h"
 
 
-#define MAX_LEN 128
 //=========================================================================
 
 enum akinator_codes
@@ -23,6 +22,11 @@ enum MODES
     DEFINITION     = 2,
     VISUALIZATION  = 3,
     MODE_ERROR     = 4
+};
+
+enum
+{
+    MAX_LEN = 128
 };
 
 //=========================================================================

@@ -4,9 +4,6 @@
 #include <stdint.h>
 
 
-#define DATA_POISON 0
-#define ERROR_NUMBER 5
-
 //=========================================================================
 
 typedef char* elem_t;
@@ -54,6 +51,12 @@ enum print_mode
     PREORDER  = 1,
     POSTORDER = 2,
     INORDER   = 3
+};
+
+enum
+{
+    DATA_POISON  = 0,
+    ERROR_NUMBER = 5
 };
 
 //=========================================================================
